@@ -1,7 +1,7 @@
 use std::fmt::Display;
-struct Client {
-    username:String,
-    password:String,
+pub struct Client {
+    pub username:String,
+    pub password:String,
 }
 
 impl Client {

@@ -3,7 +3,9 @@ use std::thread::{self, JoinHandle};
 use std::sync::mpsc::{self, Receiver};
 use std::net::{TcpListener, TcpStream, SocketAddr};
 use std::str;
+use log::{error,info,debug};
 mod objects;
+use objects::client::Client;
 
 
 
@@ -64,15 +66,36 @@ pub fn handle_connections(rx:Receiver<(TcpStream,SocketAddr)>) -> (){
                                 let userpass:Vec<&str> = message_vector[1].split(";").collect();
                                 let username = userpass[0].trim();
                                 let password = userpass[1].trim();
+                                let client  = Client {
+                                    username:String::from(username),
+                                    password:String::from(password)
+                                };
+                                
+
                                 //check if username is not null empty or already exists
-                                if username.is_empty() {
+                                if client.username.is_empty() {
+                                    //break out of the loop, kill the thread.
+                                    //log the error with client connection details
                                     
                                 } else {
-                                    if password.is_empty() {
+                                    if client.password.is_empty() {
+                                    //break out of the loop, kill the thread.
+                                    //log the error with client connection details
+                                    //tell the user the password is empty
 
                                     } else {
                                         //check if the user name already exists
-                                        
+                                        if user_exists(&client) {
+                                        //tell the client the username already exists
+                                        //tell the client to choose another username/email
+                                        }else{
+                                            //save client as a new client
+                                            create_new_user(&client);
+                                            //login the newly created user
+                                            login_user(&client);
+                                            //show a list of clients whom it can interact with
+
+                                        }
                                     }
                                 }
                             },
@@ -124,4 +147,21 @@ pub fn handle_connections(rx:Receiver<(TcpStream,SocketAddr)>) -> (){
     for connection in connection_threads {
         connection.join().unwrap();
     }
+}
+
+pub fn user_exists(client:&Client) -> bool{
+    //check the database if the username exists
+    return true;
+}
+
+pub fn create_new_user(client:&Client){
+
+}
+
+pub fn login_user(client:&Client) -> () {
+
+}
+
+pub fn logout_user(client:&Client) -> () {
+
 }
