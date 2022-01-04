@@ -61,15 +61,35 @@ pub fn handle_connections(rx:Receiver<(TcpStream,SocketAddr)>) -> (){
                         match message_vector[0] {
                             "REGISTER" => {
                                 //register_user
+                                let userpass:Vec<&str> = message_vector[1].split(";").collect();
+                                let username = userpass[0].trim();
+                                let password = userpass[1].trim();
+                                //check if username is not null empty or already exists
+                                if username.is_empty() {
+                                    
+                                } else {
+                                    if password.is_empty() {
+
+                                    } else {
+                                        //check if the user name already exists
+                                        
+                                    }
+                                }
                             },
                             "LOGIN" => {
-                                //login_user and add user in a shared hashmap
+                                //login_user
+                                //validate user from database
+                                //store user in hashmap
+
                             },
                             "MESSAGE" => {
-                                //check valid user and read message
+                                //check weather source user is there in hashmap
+                                //check if target user is there in hashmap
+                                //relay the message from source to target
                             },
                             "QUIT" => {
-                                //quit from server, invalidate session(remove user from shared hashmap), drop all used resources, drop client connection
+                                //quit from server
+                                //remove user from hashmap
                             }
                             _ => {
                                 //quit from server, invalidate session, drop client connection.
