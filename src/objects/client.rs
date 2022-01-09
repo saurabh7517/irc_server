@@ -1,4 +1,5 @@
 use std::fmt::Display;
+
 pub struct Client {
     pub username:String,
     pub password:String,
@@ -18,3 +19,4 @@ impl Display for Client {
         write!(f,"Username : {}\n Password : {}\n",self.username, self.password)
     }
 }
+
